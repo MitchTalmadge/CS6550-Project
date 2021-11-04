@@ -8,7 +8,7 @@ export const Header = () => {
       <div className="logo">
         <LogoSvg />
       </div>
-      <div className="grass">
+      <div className="title">
         <h1>Search &amp; Recommendation System</h1>
       </div>
     </div>

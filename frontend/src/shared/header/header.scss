@@ -3,9 +3,13 @@
   flex-direction: column;
   justify-content: flex-end;
 
-  height: 120px;
+  height: 200px;
 
   background-color: #89d4e3;
+  background-image: url('./panorama.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 
   .logo {
     position: absolute;
@@ -20,10 +24,11 @@
     }
   }
 
-  .grass {
+  .title {
     padding-left: 210px;
 
-    background-color: #016f4a;
-    color: white;
+    background-color: #ddeff3e5;
+    border-bottom: 6px solid #89d4e3;
+    color: #333;
   }
 }

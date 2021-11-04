@@ -15,6 +15,11 @@ const config: webpack.Configuration = {
         use: 'ts-loader',
         exclude: /node_modules/,
       },
+      /* Images */
+      {
+        test: /\.(png|jp(e*)g|gif)$/,
+        type: 'asset/resource',
+      },
       /* Stylesheets */
       {
         test: /\.s[ac]ss$/i,
@@ -22,18 +27,6 @@ const config: webpack.Configuration = {
           'style-loader',
           'css-loader',
           'sass-loader',
-        ],
-      },
-      /* Images */
-      {
-        test: /\.(png|jp(e*)g|gif)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[hash]-[name].[ext]',
-            },
-          },
         ],
       },
       /* SVG as Component */
@@ -46,11 +39,13 @@ const config: webpack.Configuration = {
   output: {
     path: distDir,
     filename: 'app.js',
+    assetModuleFilename: 'assets/[hash][ext][query]'
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(srcDir, 'index.html.ejs'),
+      favicon: path.join(srcDir, 'favicon.png'),
       filename: 'index.html',
+      template: path.join(srcDir, 'index.html.ejs'),
     }),
   ],
   resolve: {
