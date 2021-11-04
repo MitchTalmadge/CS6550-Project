@@ -17,7 +17,7 @@ const Search = () => {
   const navigate = useNavigate();
 
   const onSubmit: React.FormEventHandler = useCallback((event) => {
-    navigate("/search/" + event.target[0].value);
+    navigate("/search/" + encodeURIComponent(event.target[0].value));
     event.preventDefault();
   }, [navigate])
 
