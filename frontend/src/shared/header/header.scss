@@ -1,0 +1,29 @@
+#header {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  height: 120px;
+
+  background-color: #89d4e3;
+
+  .logo {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 180px;
+    height: 220px;
+
+    > svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .grass {
+    padding-left: 210px;
+
+    background-color: #016f4a;
+    color: white;
+  }
+}
