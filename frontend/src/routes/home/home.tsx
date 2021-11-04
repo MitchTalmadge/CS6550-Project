@@ -1,5 +1,6 @@
-import React from "react"
+import React, { useCallback } from "react"
 import { Button, Form } from "react-bootstrap"
+import { useNavigate } from "react-router-dom";
 import "./home.scss";
 
 export const Home = () => {
@@ -13,11 +14,18 @@ export const Home = () => {
 }
 
 const Search = () => {
+  const navigate = useNavigate();
+
+  const onSubmit: React.FormEventHandler = useCallback((event) => {
+    navigate("/search/" + event.target[0].value);
+    event.preventDefault();
+  }, [navigate])
+
   return (
     <div className="search">
       <h2 className="display-6">Search for an episode:</h2>
-      <Form>
-        <Form.Control></Form.Control>
+      <Form onSubmit={onSubmit}>
+        <Form.Control name="query"></Form.Control>
         <Button type="submit">Search!</Button>
       </Form>
     </div>

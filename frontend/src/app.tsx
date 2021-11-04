@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import "./app.scss";
 import { Home } from "./routes/home/home";
+import { Search } from "./routes/search/search";
 import { Season } from "./routes/season/season";
 import { Header } from "./shared/header/header";
 
@@ -16,6 +17,7 @@ export const App = (props: Props) => {
       <div className="container pt-3">
         <Routes>
           <Route path="/home" element={<Home />} />
+          <Route path="/search/:query" element={<Search />} />
           <Route path="/season/:season" element={<Season />} />
           <Route path="*" element={<NoMatch />} />
         </Routes>
