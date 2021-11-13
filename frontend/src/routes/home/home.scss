@@ -19,4 +19,20 @@
       }
     }
   }
+
+  .browse {
+    .seasons {
+      display: flex;
+      flex-direction: row;
+      overflow-x: auto;
+      overflow-y: hidden;
+
+      padding: 1rem 0;
+
+      .season {
+        cursor: pointer;
+        margin-right: 1rem;
+      }
+    }
+  }
 }

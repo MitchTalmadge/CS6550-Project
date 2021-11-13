@@ -6,11 +6,16 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist/",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "sourceMap": true,
     "sourceRoot": "./src",
     "target": "es6",
   },
   "exclude": [
     "node_modules"
-  ]
+  ],
 }

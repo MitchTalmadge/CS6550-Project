@@ -50,7 +50,10 @@ const config: webpack.Configuration = {
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    alias: {
+      "@": srcDir
+    }
   },
 }
 
-export default {config, srcDir};
+export default { config, srcDir };
