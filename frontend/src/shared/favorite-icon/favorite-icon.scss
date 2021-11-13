@@ -1,0 +1,8 @@
+.favorite-icon {
+  fill: #ffcc00;
+  stroke: black;
+
+  &.empty {
+    fill: none;
+  }
+}

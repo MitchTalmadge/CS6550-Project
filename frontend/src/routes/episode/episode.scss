@@ -1,0 +1,13 @@
+#episode {
+  .title {
+    display: flex;
+
+    .season-cover {
+      margin-right: 1rem;
+    }
+  }
+
+  .favorite-button {
+    cursor: pointer;
+  }
+}

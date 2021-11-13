@@ -1,3 +1,4 @@
+import { FavoriteIcon } from "@/shared/favorite-icon/favorite-icon";
 import { SeasonCover } from "@/shared/season-cover/season-cover";
 import React, { useCallback, useRef } from "react"
 import { Button, Form } from "react-bootstrap"
@@ -38,7 +39,6 @@ const Browse = () => {
   const seasonsRef = useRef<HTMLDivElement>();
 
   const onSeasonsScrollWheel = useCallback((event: React.WheelEvent) => {
-    event.preventDefault();
     seasonsRef.current.scrollLeft += event.deltaY;
   }, []);
 
@@ -47,8 +47,8 @@ const Browse = () => {
       <h2 className="display-6 mt-3">Browse for an episode:</h2>
       <div className="seasons" ref={seasonsRef} onWheel={onSeasonsScrollWheel}>
         {Array(19).fill(0).map((_, i) => (
-          <div className="season" onClick={() => navigate(`/season/${i + 1}`)}>
-            <SeasonCover season={i + 1} key={i + 1} />
+          <div className="season" onClick={() => navigate(`/season/${i + 1}`)} key={i + 1}>
+            <SeasonCover season={i + 1} />
           </div>
         ))}
       </div>
@@ -60,7 +60,7 @@ const Recommend = () => {
   return (
     <>
       <hr />
-      <h2 className="display-6">You may also enjoy:</h2>
+      <h2 className="display-6"><FavoriteIcon favorite={true} /> Recommendations from your favorites:</h2>
     </>
   )
 }
