@@ -48,6 +48,6 @@ def search(request):
     Takes in a query from the user and produces a best guess of which episodes may match the query.
     """
 
-    query = request.body
+    query = request.body.decode('utf-8')
     results = ir.search(query)
     return HttpResponse(json.dumps(results))
