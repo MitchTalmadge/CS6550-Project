@@ -1,18 +1,39 @@
 import { episodes } from "@/const/episodes";
 import { SeasonCover } from "@/shared/season-cover/season-cover";
 import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSeasonParamGuard } from "../season/season";
 import "./episode.scss"
 import { FavoriteIcon } from "@/shared/favorite-icon/favorite-icon";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { rootSlice } from "@/redux/root";
 import { IEpisode } from "@/models/episode";
+import axios from "axios";
+import { API_URL } from "@/const/api";
 
 export const Episode = () => {
   const { number: seasonNumber, valid: seasonValid } = useSeasonParamGuard();
   const { number: episodeNumber, valid: episodeValid } = useEpisodeParamGuard(seasonNumber);
   const episode: IEpisode = useMemo(() => ({ id: episodeNumber, season: seasonNumber }), [episodeNumber, seasonNumber]);
+
+  const [recommends, setRecommends] = useState<IEpisode[]>([]);
+
+  useEffect(() => {
+    setRecommends([]);
+    if (seasonValid && episodeValid) {
+      axios.post(`${API_URL}/recommend`, [episode])
+        .then(res => {
+          if (res.status === 200) {
+            setRecommends(res.data);
+          } else {
+            console.log("Failed to get episode recommendations", res);
+          }
+        })
+        .catch(err => {
+          console.log("Failed to get episode recommendations", err);
+        })
+    }
+  }, [episode.id, episode.season, seasonValid, episodeValid]);
 
   if (!seasonValid || !episodeValid) {
     return null;
@@ -30,6 +51,19 @@ export const Episode = () => {
       </div>
       <hr />
       <h2 className="display-6 mt-3">If you like this, you may also like:</h2>
+      {recommends.length === 0
+        ? <p>Loading...</p>
+        :
+        <ol>
+          {recommends.map(result => (
+            <li key={`${result.season}-${result.id}`}>
+              <Link to={`/season/${result.season}/episode/${result.id}`}>
+                Season {result.season} Episode {result.id}: {episodes[result.season][result.id].name}
+              </Link>
+            </li>
+          ))}
+        </ol>
+      }
     </div>
   )
 }

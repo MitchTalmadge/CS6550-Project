@@ -1,5 +1,6 @@
 from json.decoder import JSONDecodeError
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 import json
 import src.ir.ir as ir
 
@@ -8,6 +9,7 @@ def index(request):
     return HttpResponse("Hello, world!")
 
 
+@csrf_exempt
 def recommend(request):
     """
     Takes in a list of favorites episodes and returns a list of recommended episodes.
@@ -43,6 +45,7 @@ def recommend(request):
         return response
 
 
+@csrf_exempt
 def search(request):
     """
     Takes in a query from the user and produces a best guess of which episodes may match the query.
