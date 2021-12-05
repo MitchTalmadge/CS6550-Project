@@ -14,25 +14,36 @@ url = 'https://raw.githubusercontent.com/c0mpiler/SouthParkData/master/All-seaso
 stream = urllib.request.urlopen(url)
 reader = csv.reader(codecs.iterdecode(stream, 'utf-8'))
 data = {}
+
+lines = {}
+
 for row in reader:
     if row[0] != 'Season' or row[1] != 'Episode':
         if row[0] not in data:
             data[row[0]] = {}
+            lines[row[0]] = {}
         if row[1] not in data[row[0]]:
             data[row[0]][row[1]] = ''
+            lines[row[0]][row[1]] = []
         data[row[0]][row[1]] += row[3]
+        lines[row[0]][row[1]].append(row[3])
 
 docs = []
 ordering = []
 for key, value in data.items():
     for k in value.keys():
         docs.append(data[key][k])
-        ordering.append((int(key),int(k)))
+        ordering.append((int(key), int(k)))
 
 lemmatizer = nltk.stem.WordNetLemmatizer()
+
+
 def __cleantext(doc):
     return [lemmatizer.lemmatize(t) for t in nltk.word_tokenize(doc.translate(dict((ord(punc), None) for punc in string.punctuation)))]
+
+
 vectorizer = TfidfVectorizer(tokenizer=__cleantext)
+
 
 def search(query):
     """
@@ -43,11 +54,11 @@ def search(query):
     docs.append(query)
     vectors = vectorizer.fit_transform(docs)
     vector = cosine_similarity(vectors[-1], vectors)
-    index = vector.argsort()[0][-2:-7:-1] # top 5 ep.
+    index = vector.argsort()[0][-2:-7:-1]  # top 5 ep.
     docs.pop()
 
     out = []
-    for i,v in enumerate(index):
+    for i, v in enumerate(index):
         out.append({'id': ordering[v][1], 'season': ordering[v][0]})
     return out
 
@@ -61,8 +72,8 @@ def recommend(favorites):
     corpusIdx = copy.deepcopy(ordering)
 
     query = ''
-    for i,v in enumerate(favorites):
-        idx = corpusIdx.index((v['season'],v['id']))
+    for i, v in enumerate(favorites):
+        idx = corpusIdx.index((v['season'], v['id']))
         query += docs[idx]
         del corpus[idx]
         del corpusIdx[idx]
@@ -74,6 +85,14 @@ def recommend(favorites):
     docs.pop()
 
     out = []
-    for i,v in enumerate(index):
+    for i, v in enumerate(index):
         out.append({'id': corpusIdx[v][1], 'season': corpusIdx[v][0]})
     return out
+
+
+def main():
+    print(lines["10"]["1"])
+
+
+if __name__ == '__main__':
+    main()
