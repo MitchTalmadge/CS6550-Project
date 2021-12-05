@@ -3,6 +3,7 @@ import csv
 import copy
 import urllib.request
 import codecs
+import random
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import string
@@ -91,7 +92,19 @@ def recommend(favorites):
 
 
 def main():
-    print(lines["10"]["1"])
+    correct = 0
+    total = 0
+    for i in lines.keys():
+        for j in lines[i].keys():
+            for k in random.sample(lines[i][j], 5):
+                print(i,j,total)
+                res = search(k)
+                if res[0]['season'] == int(i) and res[0]['id'] == int(j):
+                    correct += 1
+                total += 1
+
+    print(correct, total, correct/total)
+
 
 
 if __name__ == '__main__':
